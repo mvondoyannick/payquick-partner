@@ -11,6 +11,35 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', "LoginController@index");
+
+//pour s'authentifier à la plateforme partenaire, route par defaut
+Route::get('/api', function(){
+    $client = new \GuzzleHttp\Client();
+    $request = $client->get('http://w.png');
 });
+Route::post('/authenticate', function($email, $pwd){
+    return "welcome";
+});
+
+Route::get('/httpd', "LoginController@admin");
+
+Route::get('/auth', "LoginController@auth");
+
+//creation d'un compte client
+Route::get('/client/new', "ClientController@new");
+
+//activation d'un compte client
+Route::get('/client/activate', "ClientController@activate");
+
+//credit d'un compte client
+Route::get('/client/credit', "ClientController@credit");
+
+//debit d'un compte client
+Route::get('/client/debit', "ClientController@debit");
+
+//Blocage d'un compte client
+Route::get('/client/lock', "ClientController@lock");
+
+//deblcage d'un compte client
+Route::get('/client/unlock', "ClientController@unlock");

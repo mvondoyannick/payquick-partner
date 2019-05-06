@@ -23,6 +23,7 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
-        "composer": "^4.1.0"
+        "composer": "^4.1.0",
+        "startbootstrap-sb-admin-2": "^4.0.3"
     }
 }
