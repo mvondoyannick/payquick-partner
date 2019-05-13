@@ -34,15 +34,17 @@
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.3/examples/sign-in/signin.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="{{url("/sweetalert/dist/sweetalert.min.js")}}"></script>
 </head>
     <body class="text-center">
-        <form class="form-signin" id="form">
+        <form class="form-signin" id="form" method="post" action="{{url("/auth")}}">
+            {{csrf_field()}}
             <img class="mb-4" src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Identifiez-vous</h1>
             <label for="inputEmail" class="sr-only">Adresse Email</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Adresse Email" required autofocus>
+            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Adresse Email" required autofocus>
             <label for="inputPassword" class="sr-only">Mot de passe</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me"> Se souvenir de moi
@@ -52,32 +54,4 @@
             <p class="mt-5 mb-3 text-muted">&copy; PAYQUICK - 2017-2019</p>
         </form>
     </body>
-    <script>
-        $(document).ready(function(){
-            console.log("Boonjour");
-
-            //on recupere le formulaire
-            $("send").preventDefault;
-
-            //envoi des données du formulaire
-            $("form").submit(function(arg){
-               arg.preventDefault(); //on bloque tout
-                var form = $(this);
-                $.ajax({
-                    type: form.attr('method'),
-                    url: "https://bca9a868.ngrok.io/api/v1/internet/test/",
-                    data: {
-                        login:   $("#inputEmail").val(),
-                        password:      $("#inputPassword").val()
-                    }
-                }).done(function(data){
-                    if (data == true){
-                        window.location = '{{url("/httpd")}}';
-                    }
-                }).fail(function(){
-                    console.log("Une erreut est survenue");
-                })
-            });
-        })
-    </script>
 </html>

@@ -47,4 +47,8 @@ class ClientController extends Controller
     public function unlock(){
         return view('client.unlock');
     }
+
+    public function messagerie(){
+        return view('client.messagerie');
+    }
 }

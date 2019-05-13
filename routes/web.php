@@ -24,7 +24,7 @@ Route::post('/authenticate', function($email, $pwd){
 
 Route::get('/httpd', "LoginController@admin");
 
-Route::get('/auth', "LoginController@auth");
+Route::post('/auth', "LoginController@auth");
 
 //creation d'un compte client
 Route::get('/client/new', "ClientController@new");
@@ -43,3 +43,6 @@ Route::get('/client/lock', "ClientController@lock");
 
 //deblcage d'un compte client
 Route::get('/client/unlock', "ClientController@unlock");
+
+//Messagerie
+Route::get('/client/messagerie', "ClientController@messagerie");
