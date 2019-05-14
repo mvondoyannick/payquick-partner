@@ -15,8 +15,12 @@ class LoginController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
-        return view('login.index');
+    public function index(Request $request){
+        if ($request->hasCookie('name')){
+            return view('login.admin');
+        }else {
+            return view('login.index');
+        }
     }
 
     /**
@@ -25,7 +29,12 @@ class LoginController extends Controller
     public function admin($data){
         //generate cookies
         Cookie::queue('name', 'loremIpsum');
-        return view('login.admin');
+        return view('login.admin', ['role' => 'admin']);
+    }
+
+    public function logout(){
+        Cookie::delete('name');
+        return redirect()->action('${App\Http\Controllers\HomeController@index}', ['parameterKey' => 'value']);
     }
 
 
@@ -39,7 +48,7 @@ class LoginController extends Controller
      */
     public function auth(Request $request){
         $client = new GuzzleHttp\Client();
-        $query = $client->request("POST", "https://ba89003e.ngrok.io/api/v1/agents/signin", [
+        $query = $client->request("POST", "http://localhost:3000/api/v1/agents/signin", [
            "form_params" => [
                "email"=> $request->email,
                "password" => $request->password
@@ -48,6 +57,7 @@ class LoginController extends Controller
         $data = $query->getBody()->getContents();
         $fylo = json_decode($data);
         if ($fylo->status == true){
+            $request->session()->flash('user', $data);
             return $this->admin($fylo->status);
         }else {
             return $this->index();

@@ -29,6 +29,9 @@ Route::post('/auth', "LoginController@auth");
 //creation d'un compte client
 Route::get('/client/new', "ClientController@new");
 
+//creation effectif d'un nouvel utilisateur
+Route::post('/client/new/save', "ClientController@save_new_customer");
+
 //activation d'un compte client
 Route::get('/client/activate', "ClientController@activate");
 
@@ -46,3 +49,6 @@ Route::get('/client/unlock', "ClientController@unlock");
 
 //Messagerie
 Route::get('/client/messagerie', "ClientController@messagerie");
+
+//pour se deconnecter
+Route::get('client/logout', "LoginController@logout");

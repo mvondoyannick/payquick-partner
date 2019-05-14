@@ -8,9 +8,24 @@ class ClientController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @detail "Permet de creer un nouveau compte
      */
     public function new(){
         return view('client.new');
+    }
+
+    public function save_new_customer(Request $request){
+        $client = new GuzzleHttp\Client();
+        $query = $client->request("POST", "http://localhost:3000/api/v1/agents/customers/new", [
+            "form_params" => [
+                "cni" => $request->cni,
+                "name" => $request->name,
+                "second_name" => $request->second_name,
+                "sexe" => $request->sexe,
+                "phone" => $request->phone
+            ]
+        ]);
+        $data = $query->getBody()->getContents();
     }
 
     /**
